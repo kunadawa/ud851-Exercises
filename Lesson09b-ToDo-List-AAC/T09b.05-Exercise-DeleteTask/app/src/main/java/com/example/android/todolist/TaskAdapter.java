@@ -82,7 +82,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         // Determine the values of the wanted data
-        TaskEntry taskEntry = mTaskEntries.get(position);
+        TaskEntry taskEntry = getTaskEntries().get(position);
         String description = taskEntry.getDescription();
         int priority = taskEntry.getPriority();
         String updatedAt = dateFormat.format(taskEntry.getUpdatedAt());
@@ -129,13 +129,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      */
     @Override
     public int getItemCount() {
-        if (mTaskEntries == null) {
+        if (getTaskEntries() == null) {
             return 0;
         }
-        return mTaskEntries.size();
+        return getTaskEntries().size();
     }
 
-    // TODO (2) Add a getTasks method that returns mTaskEntries
+    // DO (2) Add a getTasks method that returns mTaskEntries
+
 
     /**
      * When data changes, this method updates the list of taskEntries
@@ -144,6 +145,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void setTasks(List<TaskEntry> taskEntries) {
         mTaskEntries = taskEntries;
         notifyDataSetChanged();
+    }
+
+    public List<TaskEntry> getTaskEntries() {
+        return mTaskEntries;
     }
 
     public interface ItemClickListener {
@@ -174,7 +179,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         @Override
         public void onClick(View view) {
-            int elementId = mTaskEntries.get(getAdapterPosition()).getId();
+            int elementId = getTaskEntries().get(getAdapterPosition()).getId();
             mItemClickListener.onItemClickListener(elementId);
         }
     }
